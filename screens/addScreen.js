@@ -45,12 +45,12 @@ const Add = ({ navigation }) => {
     const link1 = "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=spaghetti";
     const link2 = "https://world.openfoodfacts.org/api/v0/product/737628064502.json";
     const link3 = "https://world.openfoodfacts.org/category/pizzas.json";
-    const link4 = "https://world.openpetfoodfacts.org/api/v0/product/20106836.json?fields=generic_name";
+    const link4 = "https://world.openfoodfacts.org?json=true";
 
     
 
     const getData = async () => {
-        const response = await fetch(link3);
+        const response = await fetch(link4);
         if (response.status !== 200) {
             throw new Error("Cannot fetch data");
         }
@@ -89,7 +89,7 @@ const Add = ({ navigation }) => {
         <View>
             <SafeAreaView>
                 <Text style={styles.titleText}>Add food or drink</Text>
-                <Text>{navigation.getParam("carbCount")}</Text>
+                <Text>{Math.trunc(carbCount)}</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={onChangeText}
