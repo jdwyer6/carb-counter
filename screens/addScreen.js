@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     SafeAreaView,
     TextInput,
+    ActivityIndicator
 } from "react-native";
 import { useState, useEffect } from "react";
 import { ListItem, Avatar } from "react-native-elements";
@@ -14,10 +15,11 @@ import { ListItem, Avatar } from "react-native-elements";
 
 const Add = ({ navigation }) => {
     const [text, onChangeText] = useState("");
-    const [ searchText, setSearchText ] = useState();
     const [ filtered, setFiltered ] = useState([])
-    console.log(text)
     const [ items, setItems ] = useState([]);
+    const [ loading, setLoading ] = useState(true)
+    const carbCount = navigation.getParam('carbCount')
+    const setCarbCount = navigation.getParam('setCarbCount')
 
     useEffect(() => {
         filter();
@@ -53,16 +55,15 @@ const Add = ({ navigation }) => {
             throw new Error("Cannot fetch data");
         }
         const data = await response.json();
-        // console.log(data.products);
         setItems(data.products);
         setFiltered(data.products);
-        // console.log(items)
         console.log(data.products)
+        setLoading(false)
         return data
 
     };
 
-    
+
 
 
     // getData().then((data) => console.log("resolved: ", data));
@@ -70,7 +71,10 @@ const Add = ({ navigation }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <ListItem>
+            <ListItem onPress={() => {
+                setCarbCount(carbCount - item.nutriments.carbohydrates)
+                pressHandler();
+            }}>
                 <Avatar source={item.image_url} rounded/>
                 <ListItem.Content>
                     <ListItem.Title>{item.product_name}</ListItem.Title>
@@ -93,21 +97,21 @@ const Add = ({ navigation }) => {
                     placeholder='Search by name'
                 />
                 <Button title="Submit" onPress={pressHandler} />
-                {/* {items.map((item) => {
-                    return (
-                        <View key={item.id}>
-                            <Text>{item.product_name}</Text>
-                            <Text>{item.nutriments.carbohydrates}</Text>
-                        </View>
 
-                    )
-                })} */}
-
+                {loading ? (
+                  <View style={[styles.container, styles.horizontal]}>
+                  <ActivityIndicator size="large" color="#2196F3" />
+                </View>
+            ) : (
                 <FlatList 
-                    data={filtered}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id.toString()}
-                />
+                data={filtered}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id.toString()}
+            />
+            )}
+
+
+
             </SafeAreaView>
 
         </View>
