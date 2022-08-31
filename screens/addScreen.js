@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 
+
 const Add = ({ navigation }) => {
     const [text, onChangeText] = useState("");
     console.log(text);
@@ -17,23 +18,24 @@ const Add = ({ navigation }) => {
         navigation.goBack();
     };
 
+    const link1 = "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=spaghetti";
+    const link2 = "https://world.openfoodfacts.org/api/v0/product/737628064502.json";
+    const link3 = "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=spaghetti"
+
     const getData = async () => {
-        const response = await fetch(
-            "https://world.openfoodfacts.org/api/v0/product/737628064502.json"
-        );
+        const response = await fetch(link1);
         if (response.status !== 200) {
             throw new Error("Cannot fetch data");
         }
+        // resonse.header("Access-Control-Allow-Origin", "*");
+        // resonse.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         const data = await response.json();
-        console.log(data.product);
+        console.log(data);
         return data;
     };
 
     getData().then((data) => console.log("resolved: ", data));
     // .catch(err => console.log("rejected: ", err.message));
-
-    const search = OpenFoodAPIClient.searchProducts(all);
-    console.log(search);
 
     return (
         <View>
