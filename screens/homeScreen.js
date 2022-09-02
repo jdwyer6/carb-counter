@@ -3,7 +3,6 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements'
 import { useState, useEffect, useRef } from 'react';
 import CountUp from 'react-countup';
-import { debug } from 'react-native-reanimated';
 
 const Home = ({ navigation }) => {
 
@@ -31,7 +30,11 @@ const Home = ({ navigation }) => {
 
     return ( 
         <View style={styles.container}>
-            <CountUp style={{ fontSize: 120, color: textColor}} start={prevCarbRef.current} end={Math.trunc(carbCount)} duration={1.5}/>
+            <Text style={{ fontSize: 120, color: textColor}}>
+                {carbCount}
+                {/* <CountUp start={prevCarbRef.current} end={Math.trunc(carbCount)} duration={1.5} /> */}
+            </Text>
+            
             <Text style={{ fontSize: 42, marginTop: 2}}>Carbs remaining</Text>
             <Icon
               name='add-circle'
