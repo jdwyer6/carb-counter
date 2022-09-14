@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements'
 import { useState, useEffect, useRef } from 'react';
-import CountUp from 'react-countup';
+import AnimateNumber from 'react-native-countup'
 
 const Home = ({ navigation }) => {
 
@@ -30,9 +30,8 @@ const Home = ({ navigation }) => {
 
     return ( 
         <View style={styles.container}>
-            <Text style={{ fontSize: 120, color: textColor}}>
-                {carbCount}
-                {/* <CountUp start={prevCarbRef.current} end={Math.trunc(carbCount)} duration={1.5} /> */}
+            <Text >
+                <AnimateNumber style={{ fontSize: 120, color: textColor}} initial={Math.trunc(prevCarbRef.current)} value={Math.trunc(carbCount)} timing="easeOut" countBy={1}/>
             </Text>
             
             <Text style={{ fontSize: 42, marginTop: 2}}>Carbs remaining</Text>
